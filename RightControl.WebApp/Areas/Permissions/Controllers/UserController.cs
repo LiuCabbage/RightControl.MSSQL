@@ -60,6 +60,8 @@ namespace RightControl.WebApp.Areas.Permissions.Controllers
         {
             model.CreateOn = DateTime.Now;
             model.CreateBy = Operator.UserId;
+            model.UpdateOn = DateTime.Now;
+            model.UpdateBy = Operator.UserId;
             model.PassWord=Md5.md5(Configs.GetValue("InitUserPwd"), 32);
             var result = userService.CreateModel(model) ? SuccessTip() : ErrorTip();
             return Json(result);

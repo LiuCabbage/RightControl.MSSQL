@@ -57,6 +57,8 @@ namespace RightControl.WebApp.Areas.Permissions.Controllers
         {
             model.CreateOn = DateTime.Now;
             model.CreateBy = Operator.UserId;
+            model.UpdateOn = DateTime.Now;
+            model.UpdateBy = Operator.UserId;
             var result = service.CreateModel(model) ? SuccessTip() : ErrorTip();
             return Json(result);
         }

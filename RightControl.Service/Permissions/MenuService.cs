@@ -102,11 +102,7 @@ namespace RightControl.Service
         /// <returns></returns>
         public IEnumerable<MenuModel> GetAvailableMenuList(int roleId)
         {
-            string sql = @"SELECT
-	m.Id,m.MenuName,m.MenuIcon,m.OrderNo,m.ParentId
-FROM
-	t_menu_role_action mra
-INNER JOIN t_menu m ON mra.MenuId = m.Id";
+            string sql = @"SELECT a.Id,a.MenuName,a.MenuIcon,a.OrderNo,a.ParentId,a.MenuUrl from t_menu a";
             var list = repository.GetAvailableMenuList(sql);
             foreach (var v in list)
             {

@@ -52,6 +52,8 @@ namespace RightControl.WebApp.Areas.Permissions.Controllers
         {
             model.CreateOn = DateTime.Now;
             model.CreateBy = Operator.UserId;
+            model.UpdateOn = DateTime.Now; //DateTime 类型不能空，默认值不符和sqlserver 时间范围
+            model.UpdateBy = Operator.UserId;
             bool isOk = service.CreateModel(model);
             if (isOk)
             {
