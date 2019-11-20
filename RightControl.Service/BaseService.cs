@@ -1,6 +1,7 @@
 ﻿using RightControl.IRepository;
 using RightControl.IService;
 using RightControl.Model;
+using System;
 using System.Collections.Generic;
 
 namespace RightControl.Service
@@ -87,8 +88,8 @@ namespace RightControl.Service
                     _where += string.Format(" and CreateOn>='{0}'", start + " 00:00");
                 }
                 if (!string.IsNullOrEmpty(end))
-                {
-                    _where += string.Format(" and CreateOn<='{0}'", end + " 59:59");
+                {//因为加59：59时分 sql执行转换datetime报错
+                    _where += string.Format(" and CreateOn<'{0}'", Convert.ToDateTime(end).AddDays(1).ToString("yyyy-MM-dd HH:mm"));
                 }
             }
             return _where;

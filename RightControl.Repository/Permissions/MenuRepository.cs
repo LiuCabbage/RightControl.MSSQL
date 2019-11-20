@@ -38,7 +38,13 @@ namespace RightControl.Repository
         {
             using (var conn = SqlHelper.SqlConnection())
             {
-                sql += "  where mra.RoleId = @RoleId and m.Status=1 GROUP BY mra.MenuId";
+                sql += @"  where id in(
+                            SELECT
+                                mra.MenuId
+                            FROM
+                                t_menu_role_action mra
+                            INNER JOIN t_menu m ON mra.MenuId = m.Id
+                            where mra.RoleId = 1 and m.Status = 1 GROUP BY mra.MenuId)";
                 return conn.Query<MenuModel>(sql, new { RoleId = roleId });
             }
         }
