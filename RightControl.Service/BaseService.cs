@@ -69,7 +69,7 @@ namespace RightControl.Service
                 _orderBy = string.Format(" ORDER BY {0}CreateOn desc", pageInfo.prefix);
             }
             int total = 0;
-            var list = repository.GetByPageUnite(new SearchFilter { pageIndex = pageInfo.page, pageSize = pageInfo.limit, returnFields = pageInfo.returnFields, param = filter, where = where, orderBy = _orderBy }, out total);
+            var list = repository.GetByPageUnite(new SearchFilter { prefix=pageInfo.prefix , pageIndex = pageInfo.page, pageSize = pageInfo.limit, returnFields = pageInfo.returnFields, param = filter, where = where, orderBy = _orderBy }, out total);
             return Pager.Paging(list, total);
         }
         protected string CreateWhereStr(Entity filter, string _where)

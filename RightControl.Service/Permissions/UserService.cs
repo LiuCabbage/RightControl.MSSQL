@@ -57,7 +57,7 @@ namespace RightControl.Service
             {
                 pageInfo.field = pageInfo.prefix + pageInfo.field;
             }
-            pageInfo.returnFields = string.Format("{0}Id,{0}UserName,{0}RealName,{0}CreateOn,{0}`PassWord`,{0}`Status`,{0}RoleId,r.RoleName", pageInfo.prefix);
+            pageInfo.returnFields = string.Format("{0}Id,{0}UserName,{0}RealName,{0}CreateOn,{0}PassWord,{0}Status,{0}RoleId,r.RoleName", pageInfo.prefix);
             return GetPageUnite(baseRepository, pageInfo, _where, filter);
         }
     }

@@ -9,6 +9,7 @@ namespace RightControl.Model
 {
     public class SearchFilter
     {
+        public string prefix { get; set; }
         public int pageIndex { get; set; }
         public int pageSize { get; set; }
         public string returnFields { get; set; }
