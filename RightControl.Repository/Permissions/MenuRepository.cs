@@ -10,7 +10,7 @@ namespace RightControl.Repository
     {
         public MenuModel GetParentMenu(string sql, int Id)
         {
-            using (var conn = MySqlHelper.GetConnection())
+            using (var conn = SqlHelper.SqlConnection())
             {
                 return conn.QueryFirstOrDefault<MenuModel>(sql, new { Id = Id });
             }
@@ -22,7 +22,7 @@ namespace RightControl.Repository
         /// <returns></returns>
         public IEnumerable<MenuModel> GetAvailableMenuList(string sql)
         {
-            using (var conn = MySqlHelper.GetConnection())
+            using (var conn = SqlHelper.SqlConnection())
             {
                 sql += "  GROUP BY mra.MenuId";
                 return conn.Query<MenuModel>(sql);
@@ -36,7 +36,7 @@ namespace RightControl.Repository
         /// <returns></returns>
         public IEnumerable<MenuModel> GetMenuListByRoleId(string sql, int roleId)
         {
-            using (var conn = MySqlHelper.GetConnection())
+            using (var conn = SqlHelper.SqlConnection())
             {
                 sql += "  where mra.RoleId = @RoleId and m.Status=1 GROUP BY mra.MenuId";
                 return conn.Query<MenuModel>(sql, new { RoleId = roleId });
@@ -48,7 +48,7 @@ namespace RightControl.Repository
             string sql1 = string.Format("DELETE FROM t_menu WHERE id={0}",menuId);
             string sql2 = string.Format("DELETE FROM t_menu_action WHERE MenuId={0}", menuId);
             string sql3 = string.Format("DELETE FROM t_menu_role_action WHERE MenuId={0}", menuId);
-            using (var conn=MySqlHelper.GetConnection())
+            using (var conn=SqlHelper.SqlConnection())
             {
                 IDbTransaction transaction = conn.BeginTransaction();
                 try

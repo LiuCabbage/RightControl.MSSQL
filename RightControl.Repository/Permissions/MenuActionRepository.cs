@@ -1,4 +1,4 @@
-﻿using DapperExtensions.MySQLExt;
+﻿using DapperExtensions.SqlServerExt;
 using RightControl.IRepository;
 using RightControl.Model;
 using System;
@@ -18,7 +18,7 @@ namespace RightControl.Repository
         public int SavePermission(IEnumerable<MenuActionModel> entitys, int menuId)
         {
             var result = 0;
-            using (var conn = MySqlHelper.GetConnection())
+            using (var conn = SqlHelper.SqlConnection())
             {
                 IDbTransaction transaction = conn.BeginTransaction();
                 try

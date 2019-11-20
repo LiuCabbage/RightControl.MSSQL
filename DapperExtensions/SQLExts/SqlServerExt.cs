@@ -1017,6 +1017,25 @@ namespace DapperExtensions.SqlServerExt
             return GetByInBase<T>(conn, typeof(Table), field, ids, returnFields, transaction, commandTimeout);
         }
 
+        /// <summary>
+        /// 获取分页数据 联合查询
+        /// </summary>
+        public static IEnumerable<T> GetByPageUnite<T>(this IDbConnection conn, int pageIndex, int pageSize, out int total, string returnFields = null, string where = null, object param = null, string orderBy = null, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+            int skip = 0;
+            if (pageIndex > 0)
+            {
+                skip = (pageIndex - 1) * pageSize;
+            }
 
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("SELECT COUNT(1) FROM {0};", where);
+            sb.AppendFormat("SELECT {0} FROM {1} {2}  LIMIT {3},{4}", returnFields, where, orderBy, skip, pageSize);
+            using (var reader = conn.QueryMultiple(sb.ToString(), param, transaction, commandTimeout))
+            {
+                total = reader.ReadFirst<int>();
+                return reader.Read<T>();
+            }
+        }
     }
 }

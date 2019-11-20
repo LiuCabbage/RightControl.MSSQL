@@ -16,8 +16,8 @@ namespace RightControl.IRepository
         /// </summary>
         int DeleteByWhere(string where);
         #endregion
-        IEnumerable<T> GetByPage(SearchFilter filter, out long total);
-        IEnumerable<T> GetByPageUnite(SearchFilter filter, out long total);
+        IEnumerable<T> GetByPage(SearchFilter filter, out int total);
+        IEnumerable<T> GetByPageUnite(SearchFilter filter, out int total);
         IEnumerable<T> GetAll(string returnFields = null, string orderby = null);
         IEnumerable<T> GetByWhere(string where = null, object param = null, string returnFields = null, string orderby = null);
         long GetTotal(SearchFilter filter);

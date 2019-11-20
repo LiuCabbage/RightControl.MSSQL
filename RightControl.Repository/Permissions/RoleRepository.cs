@@ -14,7 +14,7 @@ namespace RightControl.Repository
         /// <returns></returns>
         public IEnumerable<RoleModel> GetRoleList()
         {
-            using (var conn = MySqlHelper.GetConnection())
+            using (var conn = SqlHelper.SqlConnection())
             {
                 var sql = "SELECT Id,RoleName from t_role";
                 return conn.Query<RoleModel>(sql);
@@ -24,7 +24,7 @@ namespace RightControl.Repository
         {
             string sql1 = string.Format("DELETE FROM t_role WHERE Id={0}", roleId);
             string sql2 = string.Format("DELETE FROM t_menu_role_action WHERE RoleId={0}", roleId);
-            using (var conn = MySqlHelper.GetConnection())
+            using (var conn = SqlHelper.SqlConnection())
             {
                 IDbTransaction transaction = conn.BeginTransaction();
                 try

@@ -50,7 +50,7 @@ namespace RightControl.Service
             {
                 _orderBy = " ORDER BY CreateOn desc";
             }
-            long total = 0;
+            int total = 0;
             var list = baseRepository.GetByPage(new SearchFilter { pageIndex = pageInfo.page, pageSize = pageInfo.limit, returnFields = pageInfo.returnFields, param = filter, where = where, orderBy = _orderBy }, out total);
 
             return Pager.Paging(list, total);
@@ -67,7 +67,7 @@ namespace RightControl.Service
             {
                 _orderBy = string.Format(" ORDER BY {0}CreateOn desc", pageInfo.prefix);
             }
-            long total = 0;
+            int total = 0;
             var list = repository.GetByPageUnite(new SearchFilter { pageIndex = pageInfo.page, pageSize = pageInfo.limit, returnFields = pageInfo.returnFields, param = filter, where = where, orderBy = _orderBy }, out total);
             return Pager.Paging(list, total);
         }

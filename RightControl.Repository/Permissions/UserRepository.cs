@@ -14,7 +14,7 @@ namespace RightControl.Repository
         /// <returns></returns>
         public UserModel GetDetail(int Id)
         {
-            using (var conn = MySqlHelper.GetConnection())
+            using (var conn = SqlHelper.SqlConnection())
             {
                 var sql = "select u.*,r.RoleName from t_User u INNER JOIN t_role r on u.RoleId=r.Id AND u.Id=@Id";
                 return conn.Query<UserModel>(sql, new { Id }).FirstOrDefault();
@@ -28,7 +28,7 @@ namespace RightControl.Repository
         /// <returns></returns>
         public UserModel CheckLogin(string username, string password)
         {
-            using (var conn = MySqlHelper.GetConnection())
+            using (var conn = SqlHelper.SqlConnection())
             {
                 var sql = "Select Id,UserName,RealName,CreateOn,PassWord,Status,RoleId,HeadShot from t_User where 1=1 ";
                 if (!string.IsNullOrEmpty(username))
@@ -49,7 +49,7 @@ namespace RightControl.Repository
         /// <returns></returns>
         public int ModifyPwd(PassWordModel model)
         {
-            using (var conn = MySqlHelper.GetConnection())
+            using (var conn = SqlHelper.SqlConnection())
             {
                 var sql = "update t_User set PassWord=@Password where UserName=@UserName and Password=@OldPassword";
                 return conn.Execute(sql, model);
