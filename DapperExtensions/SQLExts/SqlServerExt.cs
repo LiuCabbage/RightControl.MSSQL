@@ -1027,7 +1027,7 @@ namespace DapperExtensions.SqlServerExt
             {
                 skip = (pageIndex - 1) * pageSize;
             }
-            /*分页再改一下就差不多了
+            /*分页再改一下就差不多了 牛批，在家里mqlserver 2017 跑不动
              select top 10 * 
 from (select row_number() 
 over(order by id asc) as rownumber,* 
