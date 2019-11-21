@@ -1020,24 +1020,19 @@ namespace DapperExtensions.SqlServerExt
         /// <summary>
         /// 获取分页数据 联合查询
         /// </summary>
-        public static IEnumerable<T> GetByPageUnite<T>(this IDbConnection conn,string prefix, int pageIndex, int pageSize, out int total, string returnFields = null, string where = null, object param = null, string orderBy = null, IDbTransaction transaction = null, int? commandTimeout = null)
+        public static IEnumerable<T> GetByPageUnite<T>(this IDbConnection conn, string prefix, int pageIndex, int pageSize, out int total, string returnFields = null, string where = null, object param = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            int skip = 0;
-            if (pageIndex > 0)
-            {
-                skip = (pageIndex - 1) * pageSize;
-            }
-            /*分页再改一下就差不多了 牛批，在家里mqlserver 2017 跑不动
+            /*分页代码参考 使用row_number()
              select top 10 * 
 from (select row_number() 
-over(order by id asc) as rownumber,* 
-from t_log) temp_row
+over(order by CreateOn asc) as rownumber,* 
+from t_log) temp_table
 where rownumber>((2-1)*10);
              */
+            //这里不支持order by,分页子查询里不能有这里不支持order by
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("SELECT COUNT(1) FROM {0};", where);
-            string allwhere = where += string.Format(" and {0}Id between {1} and {2}",prefix, skip + 1, pageIndex * pageSize);
-            sb.AppendFormat("SELECT {0} FROM {1} {2}", returnFields, allwhere, orderBy);
+            sb.AppendFormat("select top {3} * from(select row_number() over(order by {4}CreateOn desc) as rownumber,{0} from {1}) temp_table where rownumber > (({2}-1)*{3})", returnFields, where, pageIndex, pageSize, prefix);
             using (var reader = conn.QueryMultiple(sb.ToString(), param, transaction, commandTimeout))
             {
                 total = reader.ReadFirst<int>();

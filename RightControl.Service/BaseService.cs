@@ -59,17 +59,8 @@ namespace RightControl.Service
         #endregion
         public dynamic GetPageUnite(IBaseRepository<T> repository, PageInfo pageInfo, string where, object filter)
         {
-            string _orderBy = string.Empty;
-            if (!string.IsNullOrEmpty(pageInfo.field))
-            {
-                _orderBy = string.Format(" ORDER BY {0} {1}", pageInfo.field, pageInfo.order);
-            }
-            else
-            {
-                _orderBy = string.Format(" ORDER BY {0}CreateOn desc", pageInfo.prefix);
-            }
             int total = 0;
-            var list = repository.GetByPageUnite(new SearchFilter { prefix=pageInfo.prefix , pageIndex = pageInfo.page, pageSize = pageInfo.limit, returnFields = pageInfo.returnFields, param = filter, where = where, orderBy = _orderBy }, out total);
+            var list = repository.GetByPageUnite(new SearchFilter {prefix=pageInfo.prefix,pageIndex = pageInfo.page, pageSize = pageInfo.limit, returnFields = pageInfo.returnFields, param = filter, where = where}, out total);
             return Pager.Paging(list, total);
         }
         protected string CreateWhereStr(Entity filter, string _where)

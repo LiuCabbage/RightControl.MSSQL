@@ -67,7 +67,7 @@ namespace RightControl.Repository
         {
             using (var conn = SqlHelper.SqlConnection())
             {
-                return conn.GetByPageUnite<T>(filter.prefix,filter.pageIndex, filter.pageSize, out total, filter.returnFields, filter.where, filter.param, filter.orderBy, filter.transaction, filter.commandTimeout);
+                return conn.GetByPageUnite<T>(filter.prefix,filter.pageIndex, filter.pageSize, out total, filter.returnFields, filter.where, filter.param, filter.transaction, filter.commandTimeout);
             }
         }
         public IEnumerable<T> GetAll(string returnFields = null, string orderby = null)
